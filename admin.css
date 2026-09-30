@@ -1,0 +1,198 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #070b16;
+    color: #f8fafc;
+    overflow-x: hidden;
+}
+.admin-bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
+.admin-bg span { position: absolute; width: 420px; height: 420px; border-radius: 50%; filter: blur(110px); opacity: .13; }
+.admin-bg span:nth-child(1) { background:#2563eb; top:-180px; left:-150px; }
+.admin-bg span:nth-child(2) { background:#7c3aed; right:-170px; top:25%; }
+.admin-bg span:nth-child(3) { background:#06b6d4; bottom:-220px; left:35%; }
+.admin-shell { position:relative; z-index:1; width:min(980px,92%); margin:0 auto; padding:70px 0; }
+.admin-card { border:1px solid rgba(148,163,184,.14); border-radius:28px; padding:32px; background:linear-gradient(145deg,rgba(15,23,42,.96),rgba(10,15,29,.96)); box-shadow:0 35px 100px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.04); backdrop-filter:blur(24px); }
+.hidden { display:none !important; }
+.brand-row { display:flex; align-items:center; gap:12px; }
+.brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:13px; background:linear-gradient(135deg,#2563eb,#7c3aed); font-size:13px; font-weight:900; box-shadow:0 0 28px rgba(37,99,235,.3); }
+.brand-name { font-size:19px; font-weight:850; letter-spacing:-.5px; }
+.brand-subtitle { margin-top:2px; color:#64748b; font-size:8px; font-weight:800; letter-spacing:1.5px; }
+.panel-heading { margin-top:55px; max-width:650px; }
+.eyebrow,.card-label { color:#64748b; font-size:9px; font-weight:850; letter-spacing:1.6px; }
+.panel-heading h1 { margin-top:8px; font-size:clamp(32px,6vw,54px); letter-spacing:-2.5px; }
+.panel-heading p { margin-top:12px; color:#94a3b8; line-height:1.7; font-size:14px; }
+.login-form { width:min(460px,100%); margin-top:32px; display:grid; gap:18px; }
+.login-form label { display:grid; gap:8px; color:#cbd5e1; font-size:12px; font-weight:700; }
+input { width:100%; border:1px solid rgba(148,163,184,.16); border-radius:13px; outline:none; padding:14px 15px; background:rgba(255,255,255,.035); color:#f8fafc; font:inherit; }
+input:focus { border-color:rgba(96,165,250,.65); box-shadow:0 0 0 4px rgba(37,99,235,.08); }
+.primary-button,.secondary-button,.ghost-button,.action-button { border:0; cursor:pointer; font-weight:850; transition:.2s ease; }
+.primary-button { padding:14px 17px; border-radius:12px; color:white; background:linear-gradient(135deg,#2563eb,#4f46e5); box-shadow:0 12px 30px rgba(37,99,235,.25); }
+.primary-button:hover,.action-button:hover,.secondary-button:hover,.ghost-button:hover { transform:translateY(-2px); }
+.primary-button span { margin-left:12px; }
+.message { min-height:20px; color:#94a3b8; font-size:12px; line-height:1.5; }
+.topbar { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+.ghost-button { padding:10px 13px; border-radius:10px; color:#cbd5e1; background:rgba(255,255,255,.04); border:1px solid rgba(148,163,184,.14); }
+.control-heading { margin-top:45px; }
+.control-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:18px; margin-top:30px; }
+.control-card { border:1px solid rgba(148,163,184,.1); border-radius:18px; padding:22px; background:rgba(255,255,255,.025); }
+.tracking-input-row { display:flex; gap:10px; margin-top:13px; }
+.secondary-button { padding:0 17px; border-radius:12px; color:#dbeafe; background:rgba(37,99,235,.15); border:1px solid rgba(96,165,250,.25); }
+.status-card-top,.progress-row,.meta-row { display:flex; justify-content:space-between; align-items:center; gap:15px; }
+.state-pill { padding:6px 10px; border-radius:999px; color:#86efac; background:rgba(34,197,94,.08); border:1px solid rgba(34,197,94,.18); font-size:9px; font-weight:850; letter-spacing:.8px; }
+.state-pill.hold { color:#fcd34d; background:rgba(245,158,11,.08); border-color:rgba(245,158,11,.2); }
+.state-pill.done { color:#a7f3d0; background:rgba(16,185,129,.08); }
+.progress-row { margin-top:22px; align-items:flex-end; }
+.progress-row strong { font-size:31px; letter-spacing:-1px; }
+.progress-row span { color:#94a3b8; font-size:12px; text-align:right; }
+.progress-track { height:8px; margin-top:14px; border-radius:999px; background:rgba(148,163,184,.1); overflow:hidden; }
+.progress-bar { height:100%; width:0%; border-radius:inherit; background:linear-gradient(90deg,#2563eb,#22d3ee); transition:width .5s ease; }
+.meta-row { margin-top:15px; color:#64748b; font-size:11px; }
+.meta-row strong { color:#cbd5e1; font-size:11px; }
+.hero-control { margin-top:18px; display:flex; align-items:center; justify-content:space-between; gap:25px; padding:28px; background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(124,58,237,.08)); }
+.hero-control h2 { margin-top:8px; font-size:25px; letter-spacing:-1px; }
+.hero-control p { margin-top:6px; color:#94a3b8; font-size:12px; }
+.control-actions { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+.action-button { min-width:140px; padding:14px 17px; border-radius:12px; }
+.pause-button { color:#fef3c7; background:rgba(245,158,11,.13); border:1px solid rgba(245,158,11,.25); }
+.resume-button { color:#dcfce7; background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.22); }
+.action-button:disabled { opacity:.35; cursor:not-allowed; transform:none; }
+.control-message { margin-top:16px; }
+@media(max-width:760px) { .admin-shell{padding:30px 0}.admin-card{padding:22px;border-radius:22px}.control-grid{grid-template-columns:1fr}.hero-control{flex-direction:column;align-items:flex-start}.control-actions{width:100%;justify-content:stretch}.action-button{flex:1}.topbar{align-items:flex-start}.tracking-input-row{flex-direction:column}.secondary-button{height:46px} }
+/* ============================================================
+   ADMIN MAP CONTROL
+   ============================================================ */
+
+.admin-map-card {
+    margin-top: 18px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.admin-map-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 24px 18px;
+}
+
+.admin-map-header h2 {
+    margin-top: 8px;
+    font-size: 22px;
+    letter-spacing: -0.8px;
+}
+
+.admin-map-header p {
+    margin-top: 6px;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.map-progress-badge {
+    flex-shrink: 0;
+    padding: 9px 13px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, .12);
+    border: 1px solid rgba(96, 165, 250, .25);
+    color: #bfdbfe;
+    font-size: 13px;
+    font-weight: 850;
+}
+
+.admin-map {
+    width: 100%;
+    height: 500px;
+    background: #0b1220;
+}
+
+.admin-map .leaflet-control-zoom a {
+    background: rgba(15, 23, 42, .92);
+    color: #e2e8f0;
+    border-color: rgba(148, 163, 184, .18);
+}
+
+.admin-map .leaflet-control-zoom a:hover {
+    background: rgba(30, 41, 59, .96);
+}
+
+.admin-map .leaflet-popup-content-wrapper,
+.admin-map .leaflet-popup-tip {
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+.admin-map .leaflet-popup-content {
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-map-marker {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 4px solid rgba(255, 255, 255, .95);
+    box-shadow:
+        0 0 0 6px rgba(37, 99, 235, .18),
+        0 5px 18px rgba(0, 0, 0, .45);
+}
+
+.map-control-info {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 18px;
+    padding: 18px 24px;
+    border-top: 1px solid rgba(148, 163, 184, .08);
+    background: rgba(255, 255, 255, .018);
+}
+
+.map-control-info > div {
+    display: grid;
+    gap: 6px;
+}
+
+.map-info-label {
+    color: #64748b;
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: 1.5px;
+}
+
+.map-control-info strong {
+    color: #cbd5e1;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.map-help {
+    padding: 0 24px 20px;
+    color: #64748b;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.map-help span {
+    color: #60a5fa;
+    margin-right: 6px;
+}
+
+@media (max-width: 760px) {
+
+    .admin-map-header {
+        flex-direction: column;
+    }
+
+    .map-progress-badge {
+        align-self: flex-start;
+    }
+
+    .admin-map {
+        height: 400px;
+    }
+
+    .map-control-info {
+        grid-template-columns: 1fr;
+    }
+}

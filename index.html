@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="TrackFlow package tracking demonstration"
+    >
+
+    <title>TrackFlow | Shipment Tracking</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         ANIMATED BACKGROUND
+    =========================================== -->
+
+    <div class="background-effects">
+
+        <div class="glow glow-one"></div>
+
+        <div class="glow glow-two"></div>
+
+        <div class="glow glow-three"></div>
+
+    </div>
+
+
+    <!-- ==========================================
+         NAVBAR
+    =========================================== -->
+
+    <header class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                TF
+            </div>
+
+            <div>
+
+                <div class="logo">
+                    TrackFlow
+                </div>
+
+                <div class="brand-subtitle">
+                    SMART SHIPMENT SYSTEM
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-status">
+
+            <span class="online-dot"></span>
+
+            Tracking System Online
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         MAIN
+    =========================================== -->
+
+    <main>
+
+
+        <!-- ======================================
+             HERO
+        ======================================= -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+
+                <span class="badge-pulse"></span>
+
+                LIVE SHIPMENT TRACKING
+
+            </div>
+
+
+            <h1>
+
+                Track every mile.
+
+                <span>
+                    Know every moment.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Enter your tracking number to view
+                the latest shipment information,
+                movement and delivery history.
+
+            </p>
+
+
+            <div class="search-container">
+
+                <div class="search-icon">
+                    ⌕
+                </div>
+
+
+                <input
+                    type="text"
+                    id="trackingInput"
+                    placeholder="Enter tracking number"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+
+                <button
+                    type="button"
+                    onclick="trackPackage()"
+                >
+
+                    <span>
+                        Track Shipment
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <div class="search-hint">
+
+                <span>
+                    Secure shipment lookup
+                </span>
+
+                <span class="hint-separator">
+                    •
+                </span>
+
+                <span>
+                    Real-time database
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             TRACKING RESULT
+        ======================================= -->
+
+        <section
+            id="trackingResult"
+            class="tracking-container hidden"
+        >
+
+
+            <!-- ==================================
+                 TRACKING HEADER
+            =================================== -->
+
+            <div class="tracking-header">
+
+
+                <div class="tracking-number-block">
+
+                    <div class="eyebrow">
+                        SHIPMENT TRACKING
+                    </div>
+
+
+                    <div class="tracking-number-row">
+
+                        <h2 id="trackingNumber">
+                            —
+                        </h2>
+
+                        <button
+                            class="copy-button"
+                            id="copyTrackingButton"
+                            type="button"
+                            onclick="copyTrackingNumber()"
+                        >
+                            Copy
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="statusBadge"
+                    class="status-badge"
+                >
+
+                    <span class="status-dot"></span>
+
+                    <span id="statusText">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 SENDER / RECIPIENT
+            =================================== -->
+
+            <div class="people-section">
+
+
+                <!-- SENDER -->
+
+                <div class="person-card sender-card">
+
+                    <div class="person-icon sender-icon">
+                        ↗
+                    </div>
+
+
+                    <div class="person-info">
+
+                        <span>
+                            SENDER
+                        </span>
+
+                        <strong id="senderName">
+                            —
+                        </strong>
+
+                        <small>
+                            Shipment origin
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONNECTION -->
+
+                <div class="people-connector">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <!-- RECIPIENT -->
+
+                <div class="person-card recipient-card">
+
+                    <div class="person-icon recipient-icon">
+                        ↙
+                    </div>
+
+
+                    <div class="person-info">
+
+                        <span>
+                            RECIPIENT
+                        </span>
+
+                        <strong id="recipientName">
+                            —
+                        </strong>
+
+                        <small>
+                            Final destination
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 DELIVERY ADDRESS
+            =================================== -->
+
+            <div class="address-card">
+
+                <div class="address-icon">
+                    ◉
+                </div>
+
+
+                <div class="address-content">
+
+                    <span>
+                        DELIVERY ADDRESS
+                    </span>
+
+                    <strong id="deliveryAddress">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 FROM / TO ROUTE
+            =================================== -->
+
+            <div class="route-section">
+
+
+                <div class="route-heading">
+
+                    <div>
+
+                        <span>
+                            SHIPMENT ROUTE
+                        </span>
+
+                        <h3>
+                            In transit
+                        </h3>
+
+                    </div>
+
+
+                    <div class="route-live">
+
+                        <span class="live-dot"></span>
+
+                        LIVE
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="route-summary">
+    <div class="route-point">
+        <span class="route-label">FROM</span>
+        <strong id="routeFrom">Mersin, Türkiye</strong>
+    </div>
+
+    <div class="route-arrow">
+        <span></span>
+        <div>✈</div>
+        <span></span>
+    </div>
+
+    <div class="route-point route-destination">
+        <span class="route-label">TO</span>
+        <strong id="routeTo">Tönisvorst, Germany</strong>
+    </div>
+</div>
+
+<div class="map-wrapper">
+    <div id="trackingMap" class="tracking-map"></div>
+
+    <div class="map-live-indicator">
+        <span class="live-dot"></span>
+        LIVE ROUTE
+    </div>
+</div>
+
+
+                <!-- CURRENT LOCATION -->
+
+                <div class="current-location-banner">
+
+                    <div class="current-location-pulse">
+
+                        <span></span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            CURRENTLY IN
+                        </span>
+
+                        <strong id="currentLocation">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="movement-indicator">
+
+                        <span id="movementState">
+                            MOVING
+                        </span>
+
+                        <div class="movement-bars">
+
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                            <i></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 SHIPMENT DETAILS
+            =================================== -->
+
+            <div class="details-heading">
+
+                <span>
+                    SHIPMENT DETAILS
+                </span>
+
+                <div></div>
+
+            </div>
+
+
+            <div class="shipment-info">
+
+
+                <div class="info-box">
+
+                    <div class="info-icon">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            ESTIMATED DELIVERY
+                        </span>
+
+                        <strong id="estimatedDelivery">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-icon">
+                        ◇
+                    </div>
+
+                    <div>
+
+                        <span>
+                            SERVICE
+                        </span>
+
+                        <strong id="service">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-icon">
+                        ▣
+                    </div>
+
+                    <div>
+
+                        <span>
+                            PACKAGE
+                        </span>
+
+                        <strong id="packageType">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <div class="info-icon">
+                        ☎
+                    </div>
+
+                    <div>
+
+                        <span>
+                            CONTACT
+                        </span>
+
+                        <strong id="contactDetail">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ==================================
+                 SHIPMENT HISTORY
+            =================================== -->
+
+            <div class="history-section">
+
+
+                <div class="history-header">
+
+                    <div>
+
+                        <div class="eyebrow">
+                            DELIVERY JOURNEY
+                        </div>
+
+                        <h3>
+                            Shipment History
+                        </h3>
+
+                    </div>
+
+
+                    <div class="history-status">
+                        LIVE UPDATES
+                    </div>
+
+                </div>
+
+<div id="shipmentTimeline" class="timeline"></div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ==========================================
+         FOOTER
+    =========================================== -->
+
+    <footer>
+
+        <div class="footer-brand">
+            TrackFlow
+        </div>
+
+        <p>
+            Package tracking demonstration
+            · 2026
+        </p>
+
+    </footer>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+    <script
+        type="module"
+        src="script.js"
+    ></script>
+
+
+</body>
+
+</html>

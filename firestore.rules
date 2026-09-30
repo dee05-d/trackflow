@@ -1,0 +1,21 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /packages/{packageId} {
+
+      // The public TrackFlow page can read package data.
+      allow read: if true;
+
+      // Only the specific TrackFlow admin Firebase Auth account may
+      // change the simulation field. Email verification is intentionally
+      // not required because the existing admin login already works.
+      allow update: if request.auth != null
+                    && request.auth.uid == "FqRTQa7eQPNzPJaSuYayiJVpeKo2"
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["simulation"]);
+
+      allow create, delete: if false;
+    }
+  }
+}

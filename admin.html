@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>TrackFlow Control</title>
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-bg">
+        <span></span><span></span><span></span>
+    </div>
+
+    <main class="admin-shell">
+        <section class="admin-card" id="loginPanel">
+            <div class="brand-row">
+                <div class="brand-mark">TF</div>
+                <div>
+                    <div class="brand-name">TrackFlow</div>
+                    <div class="brand-subtitle">CONTROL CENTER</div>
+                </div>
+            </div>
+
+            <div class="panel-heading">
+                <span class="eyebrow">ADMIN ACCESS</span>
+                <h1>TrackFlow Control</h1>
+                <p>Sign in to control the shipment simulation.</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <label>
+                    Email
+                    <input id="emailInput" type="email" autocomplete="username" required placeholder="admin@example.com">
+                </label>
+                <label>
+                    Password
+                    <input id="passwordInput" type="password" autocomplete="current-password" required placeholder="••••••••">
+                </label>
+                <button class="primary-button" type="submit">Sign In <span>→</span></button>
+                <div id="loginMessage" class="message"></div>
+            </form>
+        </section>
+
+        <section class="admin-card hidden" id="controlPanel">
+            <div class="topbar">
+                <div class="brand-row">
+                    <div class="brand-mark">TF</div>
+                    <div>
+                        <div class="brand-name">TrackFlow</div>
+                        <div class="brand-subtitle">CONTROL CENTER</div>
+                    </div>
+                </div>
+                <button id="signOutButton" class="ghost-button" type="button">Sign Out</button>
+            </div>
+
+            <div class="panel-heading control-heading">
+                <span class="eyebrow">SIMULATION CONTROL</span>
+                <h1>Shipment Control</h1>
+                <p>Changes made here are reflected on the public tracking page.</p>
+            </div>
+
+            <div class="control-grid">
+                <div class="control-card">
+                    <span class="card-label">TRACKING NUMBER</span>
+                    <div class="tracking-input-row">
+                        <input id="trackingNumberInput" value="PKG728194" autocomplete="off" spellcheck="false">
+                        <button id="loadButton" class="secondary-button" type="button">Load</button>
+                    </div>
+                </div>
+
+                <div class="control-card status-card">
+                    <div class="status-card-top">
+                        <span class="card-label">CURRENT STATE</span>
+                        <span id="statePill" class="state-pill">LOADING</span>
+                    </div>
+                    <div class="progress-row">
+                        <strong id="progressValue">0.0%</strong>
+                        <span id="currentLocationValue">—</span>
+                    </div>
+                    <div class="progress-track">
+                        <div id="progressBar" class="progress-bar"></div>
+                    </div>
+                    <div class="meta-row">
+                        <span>Delivery</span>
+                        <strong id="deliveryValue">—</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-card hero-control">
+                <div class="hero-control-copy">
+                    <span class="card-label">TRACKFLOW CONTROL</span>
+                    <h2 id="controlTrackingNumber">PKG728194</h2>
+                    <p id="controlSummary">Current progress: —</p>
+                </div>
+                <div class="control-actions">
+                    <button id="pauseButton" class="action-button pause-button" type="button">⏸ PAUSE</button>
+                    <button id="resumeButton" class="action-button resume-button" type="button">▶ RESUME</button>
+                </div>
+            </div>
+
+            <div class="control-card admin-map-card">
+
+    <div class="admin-map-header">
+        <div>
+            <span class="card-label">LIVE ROUTE CONTROL</span>
+            <h2>Shipment Location</h2>
+            <p>
+                Click the route or drag the marker to manually change the shipment position.
+            </p>
+        </div>
+
+        <div class="map-progress-badge">
+            <span id="mapProgressValue">0.0%</span>
+        </div>
+    </div>
+
+    <div id="adminMap" class="admin-map"></div>
+
+    <div class="map-control-info">
+        <div>
+            <span class="map-info-label">CURRENT LOCATION</span>
+            <strong id="mapLocationValue">—</strong>
+        </div>
+
+        <div>
+            <span class="map-info-label">CONTROL MODE</span>
+            <strong id="mapControlMode">LIVE</strong>
+        </div>
+    </div>
+
+    <div class="map-help">
+        <span>●</span>
+        Drag the shipment marker or click anywhere on the route to reposition it.
+    </div>
+
+</div>
+
+            <div id="controlMessage" class="message control-message"></div>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="module" src="admin.js"></script>
+</body>
+</html>
